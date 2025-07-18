@@ -96,7 +96,7 @@ HTML_TEMPLATE = """
                                 "{{ roast }}"
                             </div>
                             <div class="text-center api-source">
-                                Source: {{ source }}
+                                Source: {{ api_source }}
                             </div>
                         {% else %}
                             <div class="roast-text">
@@ -141,7 +141,7 @@ HTML_TEMPLATE = """
                                 "${data.roast}"
                             </div>
                             <div class="text-center api-source">
-                                Source: ${data.source}
+                                Source: ${data.api_source}
                             </div>
                         `;
                     } else {
@@ -209,18 +209,18 @@ def get_random_roast():
     random.shuffle(apis)
     
     for api_func in apis:
-        roast, source = api_func()
+        roast, api_source = api_func()
         if roast:
-            return roast, source
+            return roast, api_source
     
     # Fallback roast if all APIs fail
     fallback_roasts = [
     "You're like a cloud—when you disappear, it's a beautiful day.",
-    "If I had a dollar for every smart thing you said, I’d be broke.",
+    "If I had a dollar for every smart thing you said, I'd be broke.",
     "Your code has more bugs than a rainforest.",
     "You bring everyone so much joy… when you leave the room.",
     "You have something on your chin... no, the third one down.",
-    "You’re like a try-except block—always catching feelings.",
+    "You're like a try-except block—always catching feelings.",
     "You have the emotional range of a calculator.",
     "You're the human version of a 404 error.",
     "You're not stupid—you just have bad luck thinking.",
@@ -232,7 +232,7 @@ def get_random_roast():
     "You're proof that evolution can go in reverse.",
     "You're slower than a Python script running on a potato.",
     "Your roast immunity has expired. Proceed at your own risk.",
-    "You’re like a semicolon in Python—useless.",
+    "You're like a semicolon in Python—useless.",
     "You're not the dumbest person alive, but you better hope they don't die.",
     "Your ideas are like expired milk—bad and unsettling.",
     ]
@@ -242,21 +242,21 @@ def get_random_roast():
 @app.route('/')
 def home():
     """Homepage - show initial roast"""
-    roast, source = get_random_roast()
-    return render_template_string(HTML_TEMPLATE, roast=roast, source=source)
+    roast, api_source = get_random_roast()
+    return render_template_string(HTML_TEMPLATE, roast=roast, api_source=api_source)
 
 @app.route('/api/roast')
 def api_roast():
     """API endpoint for getting new roasts via AJAX"""
-    roast, source = get_random_roast()
+    roast, api_source = get_random_roast()
     return jsonify({
         'success': True,
         'roast': roast,
-        'source': source
+        'api_source': api_source
     })
 
 if __name__ == '__main__':
     print("🔥 Starting RoastFusion...")
-    print("🌐 Open your browser and go to: http://localhost:5000")
+    print("🌐 Open your browser and go to: http://localhost:5001")
     print("⚠️  WARNING: This app contains roasts and insults - use responsibly!")
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5001)
